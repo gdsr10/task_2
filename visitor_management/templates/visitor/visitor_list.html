@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Visitor Log{% endblock %}
+
+{% block content %}
+
+<div style="display: flex; justify-content: space-between; align-items: center; margin: 0 auto; margin-top: 20px;">
+    <h1 style="margin-left: 400px;">Visitor Log</h1>
+    <a href="{% url 'visitor_add' %}" class="add-button" style="margin-right: 450px; margin-top: 25px;">Add New Visitor</a> <!-- Add button to add a new employee -->
+</div>
+
+<div class="table-container" style="margin-top: 20px; margin-left: 30px; margin-right: 30px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; overflow-x: auto;">
+    <!-- Container to center the table -->
+    <table class="employee-table" style="width: 100%; border-collapse: separate;">
+        <thead>
+            <tr>
+                <th style="width: 15%;">Name</th>
+                <th style="width: 10%;">Email</th>
+                <th style="width: 15%;">Office Location</th>
+                <th style="width: 20%;">Employee Visiting</th>
+                <th style="width: 20%;">Status</th>
+                <th style="width: 40%;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for visitor in visitors %}
+            <tr>
+                <td style="padding-left: 50px;">{{ visitor.name }}</td>
+                <td style="padding-left: 50px;">{{ visitor.email }}</td>
+                <td style="padding-left: 50px;">{{ visitor.office_location }}</td>
+                <td style="padding-left: 50px;">{{ visitor.employee_visiting }}</td>
+                <td style="padding-left: 50px;">{{ visitor.status }}</td>
+                <td style="padding-left: 50px;">
+                    <a href="{% url 'visitor_edit' visitor.pk %}" class="edit-button">Edit</a>
+                    <form action="{% url 'visitor_delete' visitor.pk %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete {{ visitor.name }}?')">Delete</button> <!-- Delete button for each visitor -->
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

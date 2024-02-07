@@ -1,0 +1,12 @@
+<!-- employee_add_edit.html -->
+
+{% extends 'base.html' %}
+{% block title %}Add/Edit Employee{% endblock %}
+{% block content %}
+    <h1>{% if form.instance.pk %}Edit Employee{% else %}Add Employee{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}

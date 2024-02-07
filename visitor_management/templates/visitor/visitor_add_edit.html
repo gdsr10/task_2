@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if visitor %}
+        Edit Visitor Log
+    {% else %}
+        Add Visitor Log
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <h1>{% if visitor %}Edit Visitor Log{% else %}Add Visitor Log{% endif %}</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Save</button>
+    </form>
+{% endblock %}
